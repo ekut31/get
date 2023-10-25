@@ -1,0 +1,22 @@
+import numpy as npimport matplotlib.pyplot as plt
+# Загрузка данных из файлов
+data_array=np.loadtxt("data",dtype=int)data_settings=np.loadtxt("settings",dtype=float)
+data_time=np.linspace(0,data_settings[0],data_array.size) * 1000
+data_array=data_array*data_settings[1]
+# Создание объектов Figure и Axesfig, ax = plt.subplots()
+# Построение графика
+ax.plot(data_time, data_array, color='blue', linestyle='-', linewidth=2, marker='.', markersize=2, markerfacecolor='white',        markeredgewidth=1.5, markeredgecolor='blue', label='Напряжение')
+# Настройка максимальных и минимальных значений для шкалы
+ax.set_xlim(np.min(data_time), np.max(data_time) + 3)ax.set_ylim(np.min(data_array), np.max(data_array) + 0.5)
+# Задание подписей осей
+ax.set_xlabel('Время,с')ax.set_ylabel('Напряжение,В')
+# Задание названия графика с переносом текста на следующую строку при длинном названии
+title_text = 'Процесс зарядки и разрядки конденсатора в RC цепи'ax.set_title(title_text, wrap=True)
+# Настройка сетки
+ax.grid(True, color='lightgray', linestyle='--')
+# Нанесение текстаtext_x = np.mean(data_time)
+text_y = np.mean(data_array)ax.text(text_x, text_y,  "",  fontsize=12, color='red', ha='center', va='center')
+# Отображение легенды
+ax.legend()
+# Отображение графика
+plt.show()
