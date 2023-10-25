@@ -1,0 +1,41 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from textwrap import wrap
+
+# Загрузка данных из файлов
+data_array=np.loadtxt("/home/b03-302/Desktop/data.txt",dtype=int)
+data_settings=np.loadtxt("/home/b03-302/Desktop/settings.txt",dtype=float)
+data_time=np.linspace(0,data_settings[0],data_array.size) * 1000
+data_array=data_array*data_settings[1]
+# Создание объектов Figure и Axesfig, ax = plt.subplots()
+fig, ax = plt.subplots()
+#Включение допсетки
+ax.minorticks_on()
+ax.grid(which='minor',color='gray',linestyle=':')
+# Построение графика
+ax.plot(data_time, data_array, color='orange', linestyle='-', linewidth=2, marker='.', markersize=2, markerfacecolor='white', markeredgewidth=1.5, markeredgecolor='orange', label='U(t)')
+# Настройка максимальных и минимальных значений для шкалы
+ax.set_xlim(np.min(data_time), np.max(data_time) + 3)
+ax.set_ylim(np.min(data_array), np.max(data_array) + 0.5)
+# Задание подписей осей
+ax.set_xlabel('Время,с')
+ax.set_ylabel('Напряжение,В')
+# Задание названия графика с переносом текста на следующую строку при длинном названии
+title_text = 'Процесс зарядки и разрядки конденсатора в RC цепи'
+ax.set_title("/n".join(wrap('Процесс зарядки и разрядки конденсатора в RC цепи',60)),loc='center')
+ax.set_ylabel("Hапряжение,В")
+ax.set_xlabel("Bремя,с")
+ax.legend()
+# Настройка сетки
+ax.grid(True, color='lightgray', linestyle='--')
+# Нанесение текстаtext_x = np.mean(data_time)
+text_x = np.mean(data_time)
+text_y = np.mean(data_array)
+ax.text(text_x, text_y,  "",  fontsize=12, color='red', ha='center', va='center')
+# Отображение легенды
+ax.legend()
+plt.text(8.5,1.25, 'Время заряда: 5.72 сек.' )
+plt.text(8.5,1.1, 'Время разряда: 7.74 cек.' )
+# Отображение графика
+plt.show()
+fig.savefig('graph.svg')
